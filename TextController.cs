@@ -9,7 +9,7 @@ public class TextController : MonoBehaviour
 
     public Text text;
 
-    private enum States {bedroom, bathroom, shower, furnish, bathroom_2, wardrobe, boots, clothes, wardrobe_2};
+    private enum States {bedroom, bathroom, shower, furnish, bathroom_2, wardrobe, nursery};
     private States myState;
 
     // Use this for initialization
@@ -42,7 +42,14 @@ public class TextController : MonoBehaviour
         {
             State_bathroom_2();
         }
-
+        else if (myState == States.wardrobe)
+        {
+            State_wardrobe();
+        }
+        else if (myState == States.nursery)
+        {
+            State_nursery();
+        }
     }
 
     void State_bedroom()
@@ -60,6 +67,10 @@ public class TextController : MonoBehaviour
         {
             myState = States.bathroom;
         }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            myState = States.wardrobe;
+        }
     }
 
     void State_bathroom()
@@ -69,20 +80,25 @@ public class TextController : MonoBehaviour
                     "A - Admire the fine furnishings\n\n" +
                     //bathroom_2
                     "S - Take a shower\n\n" +
-                    "R - Return to bedroom";
+                    "R - Return to bedroom\n\n" +
+                    "W - Go to wardrobe";
         if (Input.GetKeyDown(KeyCode.R))
         {
             myState = States.bedroom;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             myState = States.furnish;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             myState = States.bathroom_2;
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            myState = States.wardrobe;
         }
     }
 
@@ -112,16 +128,50 @@ public class TextController : MonoBehaviour
 
     void State_bathroom_2()
     {
-        text.text = "He admires his lordly prowess\n\n" +
+        text.text = "He admires his lordly prowess while singing the national anthem.\n\n" +
                     "A - Admire Furnishings\n\n" +
                     "S - Take a shower\n\n" +
-                    ""; //Next Level From Here
+                    "W - Go to wardrobe"; //Next Level From Here
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            myState = States.furnish;
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            myState = States.shower;
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            myState = States.wardrobe;
+        }
     }
 
     void State_wardrobe()
     {
         text.text = "Pendleton opens the door to the large wardrobe filled with tuxedos, tweed and walking boots. " +
-                    "Master Elijah cries from the nursery ";
+                    "Master Elijah cries from the nursery.\n\n" +
+                    "\"No Pendleton, I will go old boy,\"\n" +
+                    "\"As you wish Sir\"\n\n" +
+                    "He made his way to the nursery for it was almost 9 and time for Master Elijah's tutelage. Today he will be learning the complexities behind " +
+                    "the idetification of subjects that posess a lack of AI\n\n\n" +
+                    "B - Go to bathroom\n\n" +
+                    "N - Enter nursery";
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            myState = States.bathroom;
+        }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
+            myState = States.nursery;
+        }
     }
 
+    void State_nursery()
+    {
+        text.text = "As Lord Hoth enters the nursery, he see one of the peasants sneaking out of the window after stealing some dolphin ribeyes from the pantry.\n\n" +
+                    "C - Chase the wretched little blighter. Follow him out of the window\n\n" +
+                    "G - Run to the gun cabinet and retreive your trusty musket\n\n";
+    }
 }
